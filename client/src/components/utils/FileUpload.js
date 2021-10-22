@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone'
 import { Icon } from 'antd';
 import axios from 'axios';
 
-function FileUpload() {
+function FileUpload(props) {
 
     const [Images, setImages] = useState([]);
     const dropHandler = (files) => {
@@ -18,10 +18,19 @@ function FileUpload() {
             .then(response => {
                 if (response.data.success) {
                     setImages([...Images, response.data.filePath]);
+                    props.refreshFunction([...Images, response.data.filePath]);
                 } else {
                     alert('파일을 저장하는데 실패했습니다.');
                 }
             })
+    }
+
+    const deleteHandler = (image) => {
+      const currentIdx = Images.indexOf(image);
+      let newImages = [...Images];
+      newImages.splice(currentIdx, 1);
+      setImages(newImages);`
+      props.refreshFunction(newImages);
     }
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between'}}>
@@ -46,7 +55,7 @@ function FileUpload() {
       }}>
           {
               Images.map((image, index) => (
-                  <div key={index}>
+                  <div onClick={()=>{deleteHandler(image)}} key={index}>
                       <img style={{maxWidth: '300px', width: '300px', height: '240px'}} src={`http://localhost:5000/${image}`} />
                   </div>
               ))
