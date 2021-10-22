@@ -29,7 +29,7 @@ function FileUpload(props) {
       const currentIdx = Images.indexOf(image);
       let newImages = [...Images];
       newImages.splice(currentIdx, 1);
-      setImages(newImages);`
+      setImages(newImages);
       props.refreshFunction(newImages);
     }
   return (
