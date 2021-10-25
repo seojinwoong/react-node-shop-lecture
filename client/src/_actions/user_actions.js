@@ -4,6 +4,8 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
+    ADD_TO_CART,
+    GET_CART_ITEMS
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -43,6 +45,33 @@ export function logoutUser(){
 
     return {
         type: LOGOUT_USER,
+        payload: request
+    }
+}
+
+export function addToCart(id){
+    let body = {
+        productId: id
+    };
+    
+    const request = axios.post(`${USER_SERVER}/addToCart`, body)
+    .then(response => response.data);
+
+    return {
+        type: ADD_TO_CART,
+        payload: request
+    }
+}
+
+export function getCartItems(cartItems, userCart){
+    const request = axios.get(`/api/product/products_by_id?id=${cartItems}&type=array`)
+    .then(response => {
+        // CartItem들에 해당하는 정보들을 Product Collection에서 가져온 후에
+        // quantity 정보를 넣어준다
+    });
+
+    return {
+        type: GET_CART_ITEMS,
         payload: request
     }
 }
