@@ -11,8 +11,8 @@ function UserCardBlock(props) {
     }
     
     const renderItems = () => (
-        props.products && props.products.map(product => (
-            <tr>
+        props.products && props.products.map((product, idx) => (
+            <tr key={idx}>
                 <td>
                     <img src={renderCartImage(product.images)} style={{ width: '70px' }} alt='product'/>
                 </td>
@@ -23,7 +23,7 @@ function UserCardBlock(props) {
                     $ {product.price} 
                 </td>
                 <td>
-                    <button>REMOVE</button>
+                    <button onClick={() => {props.removeItem(product._id)}}>REMOVE</button>
                 </td>
             </tr>
         ))
